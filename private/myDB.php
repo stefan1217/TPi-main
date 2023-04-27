@@ -8,7 +8,7 @@
  */
 
 //Inclusion des fichiers contennant les functions
-require_once("config.php");
+require_once("conf.php");
 
 /**
  * function qui se connecte à la base de donnée
