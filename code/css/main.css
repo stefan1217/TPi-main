@@ -1,4 +1,4 @@
-body{
+.game-background{
     background-image: url("../img/background.png");
     background-size: cover;
     margin: auto;
@@ -48,6 +48,8 @@ body{
     transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
 }
 
+
+
 .pseudo{
     font-size: 2vw;
     color:white;
@@ -63,11 +65,10 @@ body{
     font-family: comic sans ms;
     text-align: center;
     font-weight: bold;
-    font-size: 3vw;
     margin-left:23%;
 }
 
-a{
+.link{
     text-decoration: none;
 }
 
@@ -77,27 +78,17 @@ a{
     margin: auto;
     position: absolute;
     margin-left: 2%;
-    margin-top: 3.5%;
+    margin-top: 0.5%;
     border:1px solid black;
 }
 
 
-  .cursor-trail {
-  position: fixed;
-  z-index: 9999;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-  pointer-events: none;
-  transition: all 0.3s ease-out;
+.text{
+    margin-left: 2%;
+    font-family: comic sans ms; 
 }
 
-.cursor-trail.active {
-  width: 50px;
-  height: 50px;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(2);
-  transition: all 0.5s ease-out;
+.message{
+    color:red;
 }
 

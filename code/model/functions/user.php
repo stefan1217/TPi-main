@@ -1,4 +1,11 @@
 <?php
+/**
+ * Auteur:Stefan Nikolic
+ * Page contenat les functions pour l'utilisateur
+ * Date de réalisation : 27.04.2023 - 17.05.2023
+ * Temps à disposition : 88 heures
+ * Version : 1.0.0
+ */
 session_start();
 
 require_once __DIR__ . '/../myDB.php';
@@ -43,7 +50,7 @@ function addUser($nickname, $hash_pass,$registration_date)
         $query = $pdo->prepare("INSERT INTO `user` (`nickname`,`password`,`registration_date`)VALUES(?,?,?)");
         $query->execute([$nickname, password_hash($hash_pass, PASSWORD_DEFAULT),$registration_date]);
     } else {
-        return "l'utilisateur existe deja";
+        return "Pseudo deja utilisé";
     }
 }
 
@@ -54,6 +61,17 @@ function LogOut()
     // Supprime la session
     session_destroy();
     // Redirige l'utilisateur vers la page home
-    header("Location: ../../public/index.php");
+    header("Location: ./index.php");
     die();
+}
+
+function DeleteUser($idUser){
+    $sql = "DELETE from user where idUser = :idUser";
+    $param = [
+        'idUser' => $idUser,
+    ];
+    dbRun($sql, $param);
+    $_SESSION = [];
+    // Supprime la session
+    session_destroy();
 }
