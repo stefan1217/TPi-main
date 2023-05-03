@@ -1,5 +1,6 @@
 <?php
 require_once('../model/functions/user.php');
+require_once('../model/functions/food.php');
 /**
  * Auteur:Stefan Nikolic
  * Page du jeu
@@ -9,6 +10,9 @@ require_once('../model/functions/user.php');
  */
 if (!isset($_SESSION['nickname'])) {
     header("Location: ./login.php");
+}
+if (!isset($_GET["categorie"])) {
+    header("Location:./categories.php");
 }
 ?>
 <!DOCTYPE html>
@@ -21,12 +25,16 @@ if (!isset($_SESSION['nickname'])) {
     <link rel="stylesheet" href="../css/main.css">
     <title>Jeu</title>
 </head>
-
-<body class="game-background">
+<body class="game-background" onload='methodGet()'>
+    <div class="Game-Over" id="Game-Over">
+    <div id="informations">
     <p class="text">Pseudo :<?= $_SESSION['nickname'] ?></p>
-    <p class="text">Score : </p>
+    <p class="text" id="score">Score : </p>
     <canvas id="canvas"></canvas>
+    </div>
+    </div>
     <script src="../js/script.js"></script>
+    <script src="../js/functionsFood.js"></script>
 </body>
 
 </html>

@@ -12,8 +12,7 @@ require_once __DIR__ . '/../myDB.php';
 
 
 function LoginUser($nickname, $pwd)
-{
-    
+{    
         $conn = db();
         // Vérification de l'email
         $query = $conn->prepare("SELECT * FROM user WHERE `nickname` = :nickname;");

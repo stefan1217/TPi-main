@@ -1,3 +1,13 @@
+
+*
+{
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+}
 .game-background{
     background-image: url("../img/background.png");
     background-size: cover;
@@ -90,5 +100,15 @@
 
 .message{
     color:red;
+}
+
+.Game-Over{
+    width:95%;
+    height:85%;
+    margin: auto;
+    position: absolute;
+    margin-left: 2%;
+    margin-top: 0.5%;
+    background-color: transparent;
 }
 

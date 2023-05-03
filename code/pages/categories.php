@@ -24,11 +24,11 @@ if(!isset($_SESSION['nickname'])){
     <section class="container">
        
         <a href="../pages/account.php" class="link"><p class="title">Psudo: <?=$_SESSION["nickname"]?></p></a>
-        <a href="game.php?categorie=Fruit" class="link"><button class="btn">Fruit</button></a>
-        <a href="game.php?categorie=Légumes" class="link"><button class="btn">Légumes</button></a>
-        <a href="game.php?categorie=Légumineuses" class="link"><button class="btn">Légumineuses</button></a>
-        <a href="game.php?categorie=Céréales" class="link"><button class="btn">Céréales</button></a>
-        <a href="game.php?categorie=Féculent" class="link"><button class="btn">Féculent</button></a>   
+        <a href="game.php?categorie=fruit" class="link"><button class="btn">Fruit</button></a>
+        <a href="game.php?categorie=légumes" class="link"><button class="btn">Légumes</button></a>
+        <a href="game.php?categorie=légumineuses" class="link"><button class="btn">Légumineuses</button></a>
+        <a href="game.php?categorie=céréales" class="link"><button class="btn">Céréales</button></a>
+        <a href="game.php?categorie=féculent" class="link"><button class="btn">Féculent</button></a>   
     </section>
 </body>
 </html>
