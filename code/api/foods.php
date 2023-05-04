@@ -8,7 +8,6 @@ switch($_SERVER['REQUEST_METHOD']){
     break;
     }
 
-//On stocke tous les positions récuperer de la bd dans un format json 
 function methodGET(){
     $foods =  GetAllFood();
     echo json_encode([

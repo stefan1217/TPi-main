@@ -9,3 +9,7 @@ function methodGet(){
             localStorage.setItem("Foods",JSON.stringify(json.foods));
         });
 }
+
+
+
+

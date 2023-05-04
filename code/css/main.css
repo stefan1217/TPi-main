@@ -28,7 +28,7 @@
 
 .btn{
     width: 50%; 
-    height:15%;
+    height:10%;
     background-color: #04AA6D; 
     font-family: comic sans ms;
     color: white; 
@@ -37,13 +37,15 @@
     margin-top: 5%;
     margin-left: 20%;
     border-style: none;
-    font-size: 2vw;
+    font-size: 1.5vw;
     transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
 }
 
+
+
 .btn:hover{
     width: 35%; 
-    height:15%;
+    height:10%;
     background-color: #04AA6D;
     font-family: comic sans ms; 
     color: white; 
@@ -54,9 +56,10 @@
     border-style: none;
     font-weight: bold;
     font-size: large;
-    font-size: 2vw;
+    font-size: 1.5vw;
     transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
 }
+
 
 
 
@@ -90,6 +93,7 @@
     margin-left: 2%;
     margin-top: 0.5%;
     border:1px solid black;
+    z-index: 1;
 }
 
 
@@ -102,13 +106,7 @@
     color:red;
 }
 
-.Game-Over{
-    width:95%;
-    height:85%;
-    margin: auto;
-    position: absolute;
-    margin-left: 2%;
-    margin-top: 0.5%;
-    background-color: transparent;
+#result{
+    visibility: none;
 }
 

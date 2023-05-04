@@ -4,3 +4,4 @@ function DeleteUserYesOrNo(){
         location.href = "../pages/account.php?delete";
     }
 }
+
