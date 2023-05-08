@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le : mar. 02 mai 2023 à 13:22
--- Version du serveur :  5.7.36
--- Version de PHP : 7.4.26
+-- Host: localhost:3306
+-- Generation Time: May 07, 2023 at 06:11 PM
+-- Server version: 5.7.24
+-- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,83 +19,118 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `db_ninja`
+-- Database: `db_ninja`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `game`
+-- Table structure for table `game`
 --
 
-DROP TABLE IF EXISTS `game`;
-CREATE TABLE IF NOT EXISTS `game` (
-  `idGame` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `game` (
+  `idGame` int(10) UNSIGNED NOT NULL,
   `date_start` datetime NOT NULL,
   `date_last_update` datetime NOT NULL,
   `score` int(11) NOT NULL,
   `slice_count` int(11) NOT NULL,
-  `duration` time NOT NULL,
-  `idUser` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`idGame`),
-  KEY `idUser` (`idUser`)
+  `duration` int(11) NOT NULL,
+  `idUser` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `item`
+-- Table structure for table `item`
 --
 
-DROP TABLE IF EXISTS `item`;
-CREATE TABLE IF NOT EXISTS `item` (
-  `idItem` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `item` (
+  `idItem` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) NOT NULL,
   `picture_path` varchar(50) NOT NULL,
-  `category` enum('céréale','féculent','fruit','légume','légumineuse') NOT NULL,
-  PRIMARY KEY (`idItem`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+  `category` enum('céréale','féculent','fruit','légume','légumineuse') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `item`
+-- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`idItem`, `name`, `picture_path`, `category`) VALUES
-(1, 'Tofu', '', 'légumineuse'),
-(2, 'Petit Pois', '', 'légumineuse'),
-(3, 'Maïs', '', 'céréale'),
-(4, 'Riz', '', 'céréale'),
-(5, 'Baguette', '', 'féculent'),
-(6, 'Pommes de terres', '', 'féculent');
+(1, 'Tofu', 'Tofu.png', 'légumineuse'),
+(2, 'Petit Pois', 'Petits_Pois.png', 'légumineuse'),
+(3, 'Maïs', 'Maïs.png', 'céréale'),
+(4, 'Riz', 'Riz.png', 'céréale'),
+(5, 'Baguette', 'Baguette.png', 'féculent'),
+(6, 'Patates', 'Patates.png', 'féculent'),
+(7, 'Pomme', 'pomme.png', 'fruit'),
+(8, 'Poire', 'Poire.png', 'fruit'),
+(9, 'Choux-fleurs', 'Choux-fleurs.png', 'légume'),
+(10, 'Radis', 'Radis.png', 'légume');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `idUser` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `idUser` int(10) UNSIGNED NOT NULL,
   `nickname` varchar(50) NOT NULL,
   `password` longtext NOT NULL,
-  `registration_date` datetime NOT NULL,
-  PRIMARY KEY (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+  `registration_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `user`
---
-
-INSERT INTO `user` (`idUser`, `nickname`, `password`, `registration_date`) VALUES
-(15, 'Daniel_du_bois', '$2y$10$0HRrkzy2hiqVP6Hc.hT3Zer/Qr8OmhdhgHqjTKOWm.dANnIMYduGq', '2023-05-02 13:18:24');
-
---
--- Contraintes pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Contraintes pour la table `game`
+-- Indexes for table `game`
+--
+ALTER TABLE `game`
+  ADD PRIMARY KEY (`idGame`),
+  ADD KEY `idUser` (`idUser`);
+
+--
+-- Indexes for table `item`
+--
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`idItem`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`idUser`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `game`
+--
+ALTER TABLE `game`
+  MODIFY `idGame` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+
+--
+-- AUTO_INCREMENT for table `item`
+--
+ALTER TABLE `item`
+  MODIFY `idItem` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `idUser` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `game`
 --
 ALTER TABLE `game`
   ADD CONSTRAINT `game_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;

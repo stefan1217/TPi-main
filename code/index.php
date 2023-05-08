@@ -31,6 +31,7 @@ if (isset($_GET["logout"])) {
             <p class="title">Pseudo: <?= $_SESSION["nickname"] ?></p>
         </a>
         <a href="./pages/categories.php" class="link"><button class="btn">Joueur</button></a>
+        <a href="./pages/games.php" class="link"><button class="btn">Rejoindre une partie</button></a>
         <a href="" class="link"><button class="btn">Règles</button></a>
         <a href="./index.php?logout" class="link"><button class="btn">Deconexion</button></a>
     </section>

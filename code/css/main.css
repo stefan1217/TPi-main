@@ -1,4 +1,3 @@
-
 *
 {
     box-sizing: border-box;
@@ -8,10 +7,13 @@
     -moz-user-select: none;
     -o-user-select: none;
 }
+
 .game-background{
     background-image: url("../img/background.png");
     background-size: cover;
     margin: auto;
+    width: 95vw;
+    height: 95vh;
 }
 
 .container{
@@ -20,11 +22,7 @@
     margin:auto;
 }
 
-.game{
-    width:90vw;
-    height:90vh;
-    margin:auto;
-}
+
 
 .btn{
     width: 50%; 
@@ -81,24 +79,29 @@
     margin-left:23%;
 }
 
+.games-text{
+    font-size: 1vw;
+    color:white;
+    margin-left: 20%;
+    width:50%;
+    font-family: comic sans ms;
+    text-align: center;
+    margin-left:20%;
+}
+
 .link{
     text-decoration: none;
 }
 
 #canvas{
-    width:95%;
-    height:85%;
+    
     margin: auto;
     position: absolute;
-    margin-left: 2%;
-    margin-top: 0.5%;
     border:1px solid black;
-    z-index: 1;
 }
 
 
 .text{
-    margin-left: 2%;
     font-family: comic sans ms; 
 }
 
@@ -107,6 +110,19 @@
 }
 
 #result{
-    visibility: none;
+    visibility: hidden;
+}
+
+#game-over-menu{
+    visibility: hidden;
+    border:1px solid black;
+    width:40vw;
+    height:40vh;
+    margin-left:30%;
+    margin-top:7%;
+    text-align:center;
+}
+#game-over-menu h1{
+    margin-top:15%;
 }
 
