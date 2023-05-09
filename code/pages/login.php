@@ -1,14 +1,7 @@
 <?php
 
-/**
- * Auteur:Stefan Nikolic
- * Page login 
- * Date de réalisation : 27.04.2023 - 17.05.2023
- * Temps à disposition : 88 heures
- * Version : 1.0.0
- */
 require_once('../model/functions/user.php');
-require_once('../controller/loginController.php');
+require_once('../controler/loginControler.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -30,7 +23,7 @@ require_once('../controller/loginController.php');
         <input type="password" name="password" placeholder="mot de passe" required>
         <input type="submit" value="valider" name="btn">
         <a href="./inscriptions.php">
-            <p>Je n'ai pas de compte</p>
+            <p>Je n'ai pas de compte!</p>
         </a>
         <p class="message"><?= $message ?></p>
     </form>

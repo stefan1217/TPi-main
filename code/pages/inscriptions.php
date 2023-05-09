@@ -1,15 +1,6 @@
 <?php
-
-/**
- * Auteur:Stefan Nikolic
- * Page contenat tout le code php de la page login
- * Date de réalisation : 27.04.2023 - 17.05.2023
- * Temps à disposition : 88 heures
- * Version : 1.0.0
- */
 require_once('../model/functions/user.php');
-require_once('../controller/inscriptionsController.php');
-
+require_once('../controler/inscriptionsControler.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">

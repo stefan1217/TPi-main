@@ -1,13 +1,4 @@
 <?php
-/**
- * Auteur:Stefan Nikolic
- * Page de connexion à la base de données
- * Date de réalisation : 27.04.2023 - 17.05.2023
- * Temps à disposition : 88 heures
- * Version : 1.0.0
- */
-
-//Inclusion des fichiers contennant les functions
 require_once("conf.php");
 
 /**

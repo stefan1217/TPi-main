@@ -1,12 +1,6 @@
 <?php
 require_once('../model/functions/user.php');
-/**
- * Auteur:Stefan Nikolic
- * Page du compte utilisateur
- * Date de réalisation : 27.04.2023 - 17.05.2023
- * Temps à disposition : 88 heures
- * Version : 1.0.0
- */
+
 if (!isset($_SESSION['nickname'])) {
     header("Location: ./login.php");
 }

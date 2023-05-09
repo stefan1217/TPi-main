@@ -1,12 +1,7 @@
 <?php
 require_once(__DIR__ . '/model/functions/user.php');
-/**
- * Auteur:Stefan Nikolic
- * Page home
- * Date de réalisation : 27.04.2023 - 17.05.2023
- * Temps à disposition : 88 heures
- * Version : 1.0.0
- */
+
+
 if (!isset($_SESSION['nickname'])) {
     header("Location: pages/login.php");
 }
@@ -33,7 +28,7 @@ if (isset($_GET["logout"])) {
         <a href="./pages/categories.php" class="link"><button class="btn">Joueur</button></a>
         <a href="./pages/games.php" class="link"><button class="btn">Rejoindre une partie</button></a>
         <a href="" class="link"><button class="btn">Règles</button></a>
-        <a href="./index.php?logout" class="link"><button class="btn">Deconexion</button></a>
+        <a href="./index.php?logout" class="link"><button class="btn">Déconnexion</button></a>
     </section>
 </body>
 

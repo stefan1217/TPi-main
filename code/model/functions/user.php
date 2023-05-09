@@ -1,16 +1,15 @@
 <?php
-/**
- * Auteur:Stefan Nikolic
- * Page contenat les functions pour l'utilisateur
- * Date de réalisation : 27.04.2023 - 17.05.2023
- * Temps à disposition : 88 heures
- * Version : 1.0.0
- */
 session_start();
 
 require_once __DIR__ . '/../myDB.php';
 
-
+/**
+ * function qui permet la connexion d'un utilisateur
+ *
+ * @param string $nickname
+ * @param string $pwd
+ * @return bool
+ */
 function LoginUser($nickname, $pwd)
 {    
         $conn = db();
@@ -31,6 +30,12 @@ function LoginUser($nickname, $pwd)
    
 }
 
+/**
+ * function qui permet de récupérer un utilisateur selon son nom
+ *
+ * @param string $nickname
+ * @return array
+ */
 function selectUserbyNickname($nickname)
 {
     $conn = db();
@@ -42,6 +47,14 @@ function selectUserbyNickname($nickname)
     return $result;
 }
 
+/**
+ * function qui permet d'inscrire un utilisateur
+ *
+ * @param string $nickname
+ * @param string $hash_pass
+ * @param DateTime $registration_date
+ * @return void || string
+ */
 function addUser($nickname, $hash_pass,$registration_date)
 {
     $pdo = db();
@@ -49,10 +62,14 @@ function addUser($nickname, $hash_pass,$registration_date)
         $query = $pdo->prepare("INSERT INTO `user` (`nickname`,`password`,`registration_date`)VALUES(?,?,?)");
         $query->execute([$nickname, password_hash($hash_pass, PASSWORD_DEFAULT),$registration_date]);
     } else {
-        return "Pseudo deja utilisé";
+        return "Pseudo déjà utilisé";
     }
 }
-
+/**
+ * function qui permet la déconnexion d'un utilisateur
+ *
+ * @return void
+ */
 function LogOut()
 {
     // Supprime toutes les variables de la session
@@ -64,6 +81,12 @@ function LogOut()
     die();
 }
 
+/**
+ * function qui permet de supprimer un compte utilisateur
+ *
+ * @param int $idUser
+ * @return void
+ */
 function DeleteUser($idUser){
     $sql = "DELETE from user where idUser = :idUser";
     $param = [

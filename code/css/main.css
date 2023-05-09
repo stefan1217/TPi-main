@@ -89,6 +89,16 @@
     margin-left:20%;
 }
 
+.error-text{
+    font-size: 1vw;
+    color:rgb(86, 1, 1);
+    margin-left: 20%;
+    width:50%;
+    font-family: comic sans ms;
+    text-align: center;
+    margin-left:20%;
+}
+
 .link{
     text-decoration: none;
 }
@@ -110,7 +120,7 @@
 }
 
 #result{
-    visibility: hidden;
+    
 }
 
 #game-over-menu{
@@ -124,5 +134,9 @@
 }
 #game-over-menu h1{
     margin-top:15%;
+}
+
+#result{
+    visibility: visible;
 }
 

@@ -1,12 +1,7 @@
 <?php
 require_once('../model/functions/user.php');
-/**
- * Auteur:Stefan Nikolic
- * Page categories
- * Date de réalisation : 27.04.2023 - 17.05.2023
- * Temps à disposition : 88 heures
- * Version : 1.0.0
- */
+require_once('../model/functions/food.php');
+
 if(!isset($_SESSION['nickname'])){
     header("Location: ./login.php");
 }
@@ -20,15 +15,16 @@ if(!isset($_SESSION['nickname'])){
     <link rel="stylesheet" href="../css/main.css">
     <title>Home</title>
 </head>
-<body class="game-background">
+<body class="game-background" onload="methodGet()">
     <section class="container">
-        <a href="../pages/account.php" class="link"><p class="title">Psudo: <?=$_SESSION["nickname"]?></p></a>
+        <a href="../pages/account.php" class="link"><p class="title">Pseudo: <?=$_SESSION["nickname"]?></p></a>
         <a href="../index.php" class="link"><button class="btn">Retour <<</button></a>
-        <a href="game.php?categorie=fruit" class="link"><button class="btn">Fruit</button></a>
-        <a href="game.php?categorie=légume" class="link"><button class="btn">Légumes</button></a>
-        <a href="game.php?categorie=légumineuse" class="link"><button class="btn">Légumineuses</button></a>
-        <a href="game.php?categorie=céréale" class="link"><button class="btn">Céréales</button></a>
-        <a href="game.php?categorie=féculent" class="link"><button class="btn">Féculent</button></a>   
+        <a href="game.php?category=fruit&parentUserId=<?= $_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Fruit</button></a>
+        <a href="game.php?category=légume" class="link"><button class="btn">Légume</button></a>
+        <a href="game.php?category=légumineuse" class="link"><button class="btn">Légumineuse</button></a>
+        <a href="game.php?category=céréale" class="link"><button class="btn">Céréale</button></a>
+        <a href="game.php?category=féculent" class="link"><button class="btn">Féculent</button></a>   
     </section>
+    <script src="../js/functionsFood.js" ></script> 
 </body>
 </html>
