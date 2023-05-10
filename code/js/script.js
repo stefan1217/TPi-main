@@ -1,23 +1,26 @@
 //Déclarations de varaiables
-let SpwanningTime = 2500;
+let nbFood = 1;
 let Speed = 2;
 let Score = 0;
 let Slice_count = 0;
 let time = 0;
 let foods = [];
 
+import { UpdateUserInformation } from "./functionsFood.js";
+let isClicked = false;
 let FoodList = JSON.parse(localStorage.getItem("Foods"));
 let ScoreElement = document.getElementById("score");
 let TimerElement = document.getElementById("time");
 let GameOverMenu = document.getElementById("game-over-menu");
 let GameOverMenuScore = document.getElementById("game-over-menu-score");
+let SpeedElement = document.getElementById("speed");
 let GameOverMenuButton = document.getElementById("game-over-menu-button");
 const Informations = document.getElementById("informations");
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
-FoodList.push({ category: "malbouffe", name: "Fausse-tomate", picture_path: "Fausse-tomate.png" });
-FoodList.push({ category: "malbouffe", name: "Fausse-aubergine", picture_path: "Fausse-aubergine.png" });
+FoodList.push({ category: "malbouffe", name: "Fausse-tomate", picture_path: "Fausse-tomate.png"});
+FoodList.push({ category: "malbouffe", name: "Fausse-aubergine", picture_path: "Fausse-aubergine.png"});
 
 canvas.width = window.innerWidth * 0.95;
 canvas.height = window.innerHeight * 0.75;
@@ -26,7 +29,7 @@ const FoodHeight = canvas.width / 20;
 let url = new URL(window.location.href);
 let categorie = url.searchParams.get("category");
 ScoreElement.innerText = "Score : " + Score;
-let collisionDetected = false;
+SpeedElement.innerText = "Vitesse: *" +  Math.round(Speed * 10) / 10;
 TimerElement.innerText = "Temps: 0h 0m 0s";
 
 /**
@@ -61,19 +64,23 @@ function createFood() {
   return food;
 }
 
-
-function sendData(Score,Slice_count,time,status){
-var xhr = new XMLHttpRequest();
-xhr.open('POST', '../pages/game.php?category='+categorie, true);
-xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-xhr.onload = function() {
-  if (xhr.status === 200) {
-    console.log(xhr.responseText);
-  }
-};
-var data = "variable=" + encodeURIComponent([Score,Slice_count,status,time]);
-document.getElementById("result").innerText = JSON.stringify(data);
-xhr.send(data);
+function sendDataToPhp(Score,Slice_count,time,status) {
+  let dataToSend = JSON.stringify([Score, Slice_count, time,status]);
+  fetch('../pages/game.php?category='+categorie, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: 'data=' + encodeURIComponent(dataToSend)
+  })
+      .then(response => response.text())
+      .then(result => {
+          document.getElementById("result").innerHTML = result;
+      })
+      .catch(error => {
+          console.error('Erreur:', error);
+      });
 }
 /**
  * function qui permet de dessiner les aliments
@@ -85,6 +92,7 @@ function draw() {
   // Dessiner chaque aliment
   for (let i = 0; i < foods.length; i++) {
     const food = foods[i];
+
     const img = new Image();
     img.src = food.src;
     ctx.drawImage(img, food.x, food.y, food.width, food.height);
@@ -97,8 +105,7 @@ function draw() {
       if (food.category == categorie) {
         Score -= 2;
         if (Score < 0) {
-          Score = 0;
-          
+          Score = 0;         
           GameOver();
         }
       }
@@ -108,53 +115,57 @@ function draw() {
       break;
     }
   }
+
+  if(foods.length < nbFood){
+    foods.push(createFood());
+  }
 }
 
-function drawFruit() {
-  foods.push(createFood());
-}
 
-let spawnInterval = setInterval(drawFruit, SpwanningTime);
+let UpdateInformaions = setInterval(UpdateUserInformation, 1000);
 // Fonction pour vérifier si un point est à l'intérieur d'un aliment
 function isPointInsideFood(x, y, rect) {
   return x >= rect.x && x <= rect.x + rect.width &&
     y >= rect.y && y <= rect.y + rect.height;
 }
 
+canvas.addEventListener('mousemove', mouseAndClickEvent, false);
+
 /**
  * function qui permet de gérer l'évenement click
  * @param {} event 
  */
-function handleClickEvent(event) {
-  sendData();
+function mouseAndClickEvent(event) {
+  
   // Les coordonnés exacts du curseur
-  let clicX = event.offsetX;
-  let clicY = event.offsetY;
-
+  if(isClicked){
+    let clicX = event.offsetX;
+    let clicY = event.offsetY;
   // Vérifier si le cursor est à l'intéreur d'un aliment
   for (let i = 0; i < foods.length; i++) {
     let fruit = foods[i];
     if (isPointInsideFood(clicX, clicY, fruit)) {
       // Supprimer l'aliment et on met à jour les informations
       if (fruit.category == categorie) {
-        Speed += 0.1
-        SpwanningTime * 0.8;
+        Speed += 0.1;
         Score++;
+        nbFood = Math.floor(1+(0.2*(Speed-2)/0.1));
+        SpeedElement.innerText = "Vitesse: *" + Math.round(Speed * 10) / 10;
         Slice_count++;
+        sendDataToPhp(Score,Slice_count,time,1);
         ScoreElement.innerText = "Score : " + Score;
       } else {
+        if (fruit.category == "malbouffe") {
+        GameOver();
+        }
         Score -= 2;
         Slice_count++;
         if (Score < 0) {
           Score = 0;
+
           GameOver();
         }
         ScoreElement.innerText = "Score : " + Score;
-      }
-
-      // Vérifier si le l'aliment est de la catégorie "malbouffe"
-      if (fruit.category == "malbouffe") {
-          GameOver();
       }
       
       // Supprimer le fruit du tableau
@@ -163,17 +174,23 @@ function handleClickEvent(event) {
     }
   }
 }
+}
 
-canvas.addEventListener('click', handleClickEvent, false);
+canvas.addEventListener('mousedown', handleClickEvent, false);
+
+function handleClickEvent(event){
+  if(event){
+   isClicked = true;
+  }
+  else{
+    isClicked = false;
+  }
+}
+
 window.addEventListener('resize', resizeCanvas,false);
 
-drawFruit();
-drawInterval = setInterval(draw, 10); // Boucle principal
+let drawInterval = setInterval(draw, 10); // Boucle principal
 const TimerInterval = setInterval(Timer, 1000);
-
-
-
-
 
 
 /**
@@ -199,7 +216,8 @@ function Timer() {
  * function qui permet d'afficher le menu de la fin du jeu
  */
 function GameOver() {
-  clearInterval(spawnInterval);
+  sendDataToPhp(Score,Slice_count,time,0);
+  clearInterval(UpdateInformaions);
   clearInterval(TimerInterval);
   clearInterval(drawInterval);
   canvas.remove();
@@ -210,5 +228,12 @@ function GameOver() {
     location.href = "./categories.php";
   });
 }
+
+window.addEventListener('beforeunload', function(event) {
+  sendDataToPhp(Score,Slice_count,time,0);
+});
+
+
+
 
 

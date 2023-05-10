@@ -13,11 +13,12 @@ require_once('../controler/gameControler.php');
     <link rel="stylesheet" href="../css/main.css">
     <title>Jeu</title>
 </head>
-<body class="game-background" onload="UpdateUserInformation()">
-<div id="informations" > 
-    <p  id="nickaname" class="text">Pseudo :<?= $_SESSION['nickname'] ?></p>
-    <p class="text"  id="score">Score : </p>
-    <p class="text" id="time" >Temps :</p>
+<body class="game-background">
+    <div id="informations"> 
+    <p  id="nickaname" class="text">Joueurs : <?= $_SESSION['nickname'] ?></p>
+    <p class="text"  id="score">Score : * </p>
+    <p class="text" id="speed">Vitesse :</p>
+    <p class="text" id="time">Temps :</p>
     </div>
     <canvas id="canvas" ></canvas>
     <div id="result"></div>
@@ -25,8 +26,8 @@ require_once('../controler/gameControler.php');
     <h1>Vous avez perdu!</h1>
      <h2 id="game-over-menu-score">Votre score est de :</h2>
     <button id="game-over-menu-button">Retour</button>
-    </div>  
-    <script src="../js/script.js" ></script>
-    <script src="../js/functionsFood.js" ></script>
+    </div> 
+    <script src="../js/script.js" type="module"></script>
+    <script src="../js/functionsFood.js" type="module" ></script>
 </body>
 </html>

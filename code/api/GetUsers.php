@@ -12,6 +12,5 @@ function UpdateUserInformations(){
         echo json_encode([
              'users' => $users
              ],JSON_UNESCAPED_UNICODE);
-        }
-        
+        }    
 }

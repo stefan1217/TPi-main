@@ -1,16 +1,6 @@
-function methodGet() {
-    const config = {
-        method: "get",
-    };
 
-    fetch("../api/Getfoods.php", config)
-        .then(response => { return response.json() })
-        .then(json => {
-            localStorage.setItem("Foods", JSON.stringify(json.foods));
-        });
-}
 
-function UpdateUserInformation() {
+export function UpdateUserInformation() {
     const config = {
         method: "get",
     };
@@ -23,9 +13,12 @@ function UpdateUserInformation() {
         fetch('../api/GetUsers.php?parentUserId=' + id, config)
             .then(response => { return response.json() })
             .then(json => {
-                console.log(json);
-            })
-            
+                let nicknames = "";
+                json.users.forEach(element => {
+                    nicknames += element["nickname"] + " ";
+                });
+                document.getElementById("nickaname").innerText ="Joueurs : " + nicknames;
+            })          
     }
 }
 

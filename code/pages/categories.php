@@ -15,16 +15,16 @@ if(!isset($_SESSION['nickname'])){
     <link rel="stylesheet" href="../css/main.css">
     <title>Home</title>
 </head>
-<body class="game-background" onload="methodGet()">
+<body class="game-background">
     <section class="container">
         <a href="../pages/account.php" class="link"><p class="title">Pseudo: <?=$_SESSION["nickname"]?></p></a>
         <a href="../index.php" class="link"><button class="btn">Retour <<</button></a>
-        <a href="game.php?category=fruit&parentUserId=<?= $_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Fruit</button></a>
+        <a href="game.php?category=fruit&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Fruit</button></a>
         <a href="game.php?category=légume" class="link"><button class="btn">Légume</button></a>
         <a href="game.php?category=légumineuse" class="link"><button class="btn">Légumineuse</button></a>
         <a href="game.php?category=céréale" class="link"><button class="btn">Céréale</button></a>
         <a href="game.php?category=féculent" class="link"><button class="btn">Féculent</button></a>   
     </section>
-    <script src="../js/functionsFood.js" ></script> 
+  
 </body>
 </html>

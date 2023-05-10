@@ -49,15 +49,14 @@ function CreateGame($date_start,$score,$slice_count,$duration,$idUser,$status,$c
  * @param int $idUser
  * @return void
  */
-function UpdateGame($date_start,$score,$slice_count,$duration,$idUser,$status){
-    $sql = "UPDATE `game` SET `date_last_update` = NOW(),`score`=:score,`slice_count` = :slice_count,`duration` = :duration,`status` = :status WHERE idUser = :idUser AND date_start = :date_start"; 
+function UpdateGame($score,$slice_count,$duration,$idUser,$status){
+    $sql = "UPDATE `game` SET `date_last_update` = NOW(),`score`=:score,`slice_count` = :slice_count,`duration` = :duration,`status` = :status WHERE idUser = :idUser AND status = true"; 
     $param = [
         'score' => $score,
         'slice_count' => $slice_count,
         'duration' => $duration,
         'status' => $status,
         'idUser' => $idUser,
-        'date_start' => $date_start,
     ];
     dbRun($sql, $param); 
 }
@@ -132,3 +131,8 @@ function GetAllUserInformations($parentIdUser){
     $statement = dbRun($sql, $param)->fetchAll(PDO::FETCH_ASSOC);
     return $statement;
 }
+
+
+
+
+

@@ -20,7 +20,7 @@ if (isset($_GET["logout"])) {
     <title>Home</title>
 </head>
 
-<body class="game-background">
+<body class="game-background" onload="methodGet()">
     <section class="container">
         <a href="./pages/account.php" class="link">
             <p class="title">Pseudo: <?= $_SESSION["nickname"] ?></p>
@@ -30,6 +30,6 @@ if (isset($_GET["logout"])) {
         <a href="" class="link"><button class="btn">Règles</button></a>
         <a href="./index.php?logout" class="link"><button class="btn">Déconnexion</button></a>
     </section>
+    <script src="./js/updateInformations.js" ></script> 
 </body>
-
 </html>
