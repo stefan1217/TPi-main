@@ -67,6 +67,7 @@ function UpdateGame($score,$slice_count,$duration,$idUser,$status){
  * @return array
  */
 function GetOnGoingGames($idUser){
+
     $sql = "SELECT game.idGame,game.category,game.date_start,game.date_last_update,game.score,game.slice_count,game.duration,game.parentIdUser,user.nickname FROM game INNER JOIN user ON game.idUser = user.idUser where game.status = true and game.parentIdUser != :parentIdUser and game.idUser != :idUser";
     $param = [
         'parentIdUser' => $idUser,
@@ -82,13 +83,27 @@ function GetOnGoingGames($idUser){
  * @return boolean
  */
 function isUserInGame($idUser){
-    $sql = "SELECT COUNT(idUser) from game where idUser = :idUser and status = true";
+    $sql = "SELECT COUNT(idUser) from game where idUser = :idUser and status = true and parentIdUser=:parentIdUser";
     $param = [
         'idUser' => $idUser,
+        'parentIdUser' => $idUser,
     ];
     $statement = dbRun($sql, $param)->fetch(PDO::FETCH_ASSOC);
     return $statement["COUNT(idUser)"];
 }
+
+function nbPlayersInGame($parentIdUser,$date_start){
+    $sql = "SELECT COUNT(parentIdUser) from game where parentIdUser = :parentIdUser and status = true and date_start = :date_start";
+    $param = [
+        'parentIdUser' => $parentIdUser,
+        'date_start' => $date_start,
+    ];
+    $statement = dbRun($sql, $param)->fetch(PDO::FETCH_ASSOC);
+    return $statement["COUNT(parentIdUser)"];
+}
+
+
+
 /**
  * function qui permet de créer une nouvelle partie pour un joueur qui veut rejoindre une partie en cours
  *
@@ -103,7 +118,8 @@ function isUserInGame($idUser){
  * @return void || string
  */
 function JoinGame($date_start,$date_last_update,$score,$slice_count,$duration,$idUser,$status,$category,$parentIdUser){
-    if(isUserInGame($idUser) == 0){
+    if(nbPlayersInGame($parentIdUser,$date_start)!=2){
+    if(isUserInGame($idUser) < 2){
     $sql = "INSERT INTO `game` (`date_start`,`date_last_update`,`score`,`slice_count`,`duration`,`idUser`,`status`,`category`,`parentIdUser`) value (:date_start,:date_last_update,:score,:slice_count,:duration,:idUser,:status,:category,:parentIdUser)";
     $param = [
         'date_start' => $date_start,
@@ -121,10 +137,14 @@ function JoinGame($date_start,$date_last_update,$score,$slice_count,$duration,$i
 else {
     return "Vous avez déjà rejoint cette partie!";
 }
+    }
+    else{
+        return "La partie est pleine!";
+    }
 }
 
 function GetAllUserInformations($parentIdUser){
-    $sql = "SELECT game.score,game.slice_count,user.nickname from game INNER JOIN user ON game.idUser = user.idUser where game.parentIdUser = :parentIdUser and game.status = true";
+    $sql = "SELECT game.score,game.idUser,game.slice_count,game.date_start,user.nickname from game INNER JOIN user ON game.idUser = user.idUser where game.parentIdUser = :parentIdUser and game.status = true order by game.score desc";
     $param = [
         'parentIdUser' => $parentIdUser,
     ];

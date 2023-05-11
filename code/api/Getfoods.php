@@ -6,6 +6,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         methodGET();
         break;   
 }
+/**
+ * function qui encode en json tous les aliments 
+ *
+ * @return json
+ */
 function methodGET()
 {
     $foods =  GetAllFood();  

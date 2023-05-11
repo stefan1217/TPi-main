@@ -19,11 +19,11 @@ if(!isset($_SESSION['nickname'])){
     <section class="container">
         <a href="../pages/account.php" class="link"><p class="title">Pseudo: <?=$_SESSION["nickname"]?></p></a>
         <a href="../index.php" class="link"><button class="btn">Retour <<</button></a>
-        <a href="game.php?category=fruit&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Fruit</button></a>
-        <a href="game.php?category=légume" class="link"><button class="btn">Légume</button></a>
-        <a href="game.php?category=légumineuse" class="link"><button class="btn">Légumineuse</button></a>
-        <a href="game.php?category=céréale" class="link"><button class="btn">Céréale</button></a>
-        <a href="game.php?category=féculent" class="link"><button class="btn">Féculent</button></a>   
+        <a href="game.php?category=fruit&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>&idUser=<?=$_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Fruit</button></a>
+        <a href="game.php?category=légume&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>&idUser=<?=$_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Légume</button></a>
+        <a href="game.php?category=légumineuse&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>&idUser=<?=$_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Légumineuse</button></a>
+        <a href="game.php?category=céréale&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>&idUser=<?=$_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Céréale</button></a>
+        <a href="game.php?category=féculent&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>&idUser=<?=$_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Féculent</button></a>   
     </section>
   
 </body>

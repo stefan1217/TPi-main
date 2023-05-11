@@ -1,3 +1,6 @@
+/*
+* Description : Page css
+*/
 *
 {
     box-sizing: border-box;
@@ -22,8 +25,6 @@
     margin:auto;
 }
 
-
-
 .btn{
     width: 50%; 
     height:10%;
@@ -38,8 +39,6 @@
     font-size: 1.5vw;
     transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
 }
-
-
 
 .btn:hover{
     width: 35%; 
@@ -57,9 +56,6 @@
     font-size: 1.5vw;
     transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
 }
-
-
-
 
 .pseudo{
     font-size: 2vw;
@@ -103,13 +99,6 @@
     text-decoration: none;
 }
 
-#canvas{
-    
-    margin: auto;
-    position: absolute;
-    border:1px solid black;
-}
-
 
 .text{
     font-family: comic sans ms; 
@@ -128,6 +117,14 @@
     margin-top:7%;
     text-align:center;
 }
+
+#canvas{
+    
+    margin: auto;
+    position: absolute;
+    border:1px solid black;
+}
+
 #game-over-menu h1{
     margin-top:15%;
 }

@@ -1,5 +1,4 @@
 <?php
-
 require_once('../model/functions/user.php');
 require_once('../controler/loginControler.php');
 ?>

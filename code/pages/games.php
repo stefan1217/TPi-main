@@ -9,7 +9,6 @@ $games = GetOnGoingGames($_SESSION["idUtilisateur"]);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,7 +28,7 @@ $games = GetOnGoingGames($_SESSION["idUtilisateur"]);
         ?>
             <p class="games-text">Hôte: <?php echo $game["nickname"]; ?></p>
             <p class="games-text">Categorie: <?php echo $game["category"]; ?></p>
-            <a href="game.php?category=<?= $game["category"] ?>&date_start=<?= $game["date_start"] ?>&date_last_update=<?= $game["date_last_update"] ?>&idGame=<?= $game["idGame"] ?>&score=<?= $game["score"] ?>&slice_count=<?= $game["slice_count"] ?>&duration=<?= $game["duration"] ?>&parentUserId=<?= $game["parentIdUser"] ?>" class="link"><button class="btn">Rejoindre</button></a>
+            <a href="game.php?startGame=true&category=<?= $game["category"] ?>&date_start=<?= $game["date_start"] ?>&date_last_update=<?= $game["date_last_update"] ?>&idGame=<?= $game["idGame"] ?>&score=<?= $game["score"] ?>&slice_count=<?= $game["slice_count"] ?>&duration=<?= $game["duration"] ?>&parentUserId=<?= $game["parentIdUser"] ?>&idUser=<?= $_SESSION["idUtilisateur"] ?>" class="link"><button class="btn">Rejoindre</button></a>
         <?php }
         if (isset($_GET['message'])) {
             echo "<p class='error-text'>" . $_GET['message'] . "</p>";
@@ -37,5 +36,4 @@ $games = GetOnGoingGames($_SESSION["idUtilisateur"]);
         ?>
     </section>
 </body>
-
 </html>

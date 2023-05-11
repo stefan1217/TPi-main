@@ -18,9 +18,12 @@ if (!isset($_GET["category"])) {
             }
         }
     } else {
-        if (JoinGame($_GET["date_start"], $_GET["date_last_update"], $_GET['score'], $_GET['slice_count'], $_GET["duration"], $_SESSION['idUtilisateur'], true, $_GET["category"], $_GET['parentUserId']) != null) {
-            header("Location:./games.php?message='Vous avez déjà rejoint cette partie'");
-            die();
+        if (isset($_GET["startGame"])) {
+            unset($_GET["startGame"]);
+            if (JoinGame($_GET["date_start"], $_GET["date_last_update"], $_GET['score'], $_GET['slice_count'], $_GET["duration"], $_SESSION['idUtilisateur'], true, $_GET["category"], $_GET['parentUserId']) != null) {
+                header("Location:./games.php?message='Vous avez déjà rejoint cette partie'");
+                die();
+            }
         }
     }
 }

@@ -26,7 +26,6 @@ if (isset($_GET["delete"])) {
         <p class="title">Psudo: <?= $_SESSION["nickname"] ?></p>
         <button class="btn" onclick="DeleteUserYesOrNo()">Suprimer mon compte</button>
     </section>
-
     <script src="../js/user.js"></script>
 </body>
 

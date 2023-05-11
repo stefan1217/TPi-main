@@ -6,6 +6,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
         UpdateUserInformations();
         break;   
 }
+
+/**
+ * function qui encode en json toutes les donnés des utilisateur presant dans la partie
+ *
+ * @return json
+ */
 function UpdateUserInformations(){
     if($id = filter_input(INPUT_GET, 'parentUserId', FILTER_VALIDATE_INT)){
         $users = GetAllUserInformations($id);
