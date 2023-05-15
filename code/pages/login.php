@@ -1,4 +1,7 @@
 <?php
+/**
+ * Description: Page de connexion
+ */
 require_once('../model/functions/user.php');
 require_once('../controler/loginControler.php');
 ?>

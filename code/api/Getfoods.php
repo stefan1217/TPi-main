@@ -7,7 +7,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;   
 }
 /**
- * function qui encode en json tous les aliments 
+ * fonction qui encode en json tous les aliments 
  *
  * @return json
  */

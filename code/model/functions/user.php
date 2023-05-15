@@ -2,9 +2,12 @@
 session_start();
 
 require_once __DIR__ . '/../myDB.php';
+// La date est mise à l'heure de Zurich
+date_default_timezone_set('Europe/Zurich');
+
 
 /**
- * function qui permet la connexion d'un utilisateur
+ * fonction qui permet la connexion d'un utilisateur
  *
  * @param string $nickname
  * @param string $pwd
@@ -31,7 +34,7 @@ function LoginUser($nickname, $pwd)
 }
 
 /**
- * function qui permet de récupérer un utilisateur selon son nom
+ * fonction qui permet de récupérer un utilisateur selon son nom
  *
  * @param string $nickname
  * @return array
@@ -48,7 +51,7 @@ function selectUserbyNickname($nickname)
 }
 
 /**
- * function qui permet d'inscrire un utilisateur
+ * fonction qui permet d'inscrire un utilisateur
  *
  * @param string $nickname
  * @param string $hash_pass
@@ -66,13 +69,13 @@ function addUser($nickname, $hash_pass,$registration_date)
     }
 }
 /**
- * function qui permet la déconnexion d'un utilisateur
+ * fonction qui permet la déconnexion d'un utilisateur
  *
  * @return void
  */
 function LogOut()
 {
-    // Supprime toutes les variables de la session
+    // Supprime toutes les variables de session
     $_SESSION = [];
     // Supprime la session
     session_destroy();

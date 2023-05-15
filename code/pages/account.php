@@ -1,4 +1,7 @@
 <?php
+/**
+ * Description: Page de l'utilisateur
+ */
 require_once('../model/functions/user.php');
 
 if (!isset($_SESSION['nickname'])) {
@@ -24,7 +27,8 @@ if (isset($_GET["delete"])) {
 <body class="game-background">
     <section class="container">
         <p class="title">Psudo: <?= $_SESSION["nickname"] ?></p>
-        <button class="btn" onclick="DeleteUserYesOrNo()">Suprimer mon compte</button>
+        <a href="../index.php" class="link"><button class="account">Retour <<< </button></a>
+        <button class="btn" onclick="DeleteUserYesOrNo()">Supprimer mon compte</button>
     </section>
     <script src="../js/user.js"></script>
 </body>

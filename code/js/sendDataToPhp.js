@@ -1,14 +1,14 @@
 
 /**
- * function qui permet d'envoiyer des donnés javascrpit en php via une rêquete Http
+ * function qui permet d'envoiyer les donnés javascript en php via une rêquete HTTP
  * @param {string} categorie 
  * @param {int} score 
  * @param {int} slice_count 
  * @param {int} time 
  * @param {bool} status 
  */
-export function sendDataToPhp(categorie, score, slice_count, time, status) {
-    let dataToSend = JSON.stringify([score, slice_count, time, status]);
+export function sendDataToPhp(categorie, score, slice_count, status) {
+    let dataToSend = JSON.stringify([score, slice_count, status]);
     fetch('../pages/game.php?category=' + categorie, {
         method: 'POST',
         headers: {

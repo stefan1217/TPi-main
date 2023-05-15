@@ -8,7 +8,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 }
 
 /**
- * function qui encode en json toutes les donnés des utilisateur presant dans la partie
+ * fonction qui encode en json toutes les donnés des utilisateurs présant dans la partie
  *
  * @return json
  */

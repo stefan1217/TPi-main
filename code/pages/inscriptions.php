@@ -1,4 +1,7 @@
 <?php
+/**
+ * Description: Page d'inscription
+ */
 require_once('../model/functions/user.php');
 require_once('../controler/inscriptionsControler.php');
 ?>

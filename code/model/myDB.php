@@ -1,8 +1,11 @@
 <?php
-require_once("conf.php");
-
 /**
- * function qui se connecte à la base de donnée
+ * Description : Page de connection à la base de donné 
+*/
+
+require_once("conf.php");
+/**
+ * fonction qui se connecte à la base de donnée
  *
  * @param string sql
  * @param string param
@@ -21,7 +24,7 @@ function db(){
 }
 
 /**
- * function qui éxecute une requête sql
+ * fonction qui éxecute une requête sql
  *
  * @param string sql
  * @param string param

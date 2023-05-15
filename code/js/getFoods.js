@@ -1,5 +1,5 @@
 /**
- * Function qui permet de stocker tous les aliments dans le localStorage
+ * fonction qui permet de stocker tous les aliments dans le localStorage
  */
 function GetAllFood() {
     const config = {

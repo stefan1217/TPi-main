@@ -1,26 +1,22 @@
 /**
- * Description : Script du jeu
+ * Description : Script principale du jeu
  */
-
 import { sendDataToPhp } from "./sendDataToPhp.js";
 import { addBadFood } from "./addBadFood.js";
 import { UpdateUsers } from "./updateUsers.js";
 
-//Déclarations de varaiables
+// Déclarations des varaiables
 let nbFood = 1;
-let Speed = 2;
+let Speed = 1;
 let Score = 0;
-let time = 0;
 let foods = [];
 let Slice_count = 0;
 
 // Récuperation des aliments
 let FoodList = JSON.parse(localStorage.getItem("Foods"));
-// Ajout des mauvais aliments dans la liste
+// Ajout des aliments malsains dans la liste
 addBadFood(FoodList);
 
-
-let TimerElement = document.getElementById("time");
 let SpeedElement = document.getElementById("speed");
 let GameOverMenu = document.getElementById("game-over-menu");
 let GameOverMenuButton = document.getElementById("game-over-menu-button");
@@ -36,25 +32,24 @@ let url = new URL(window.location.href);
 let categorie = url.searchParams.get("category");
 let idUser = url.searchParams.get("idUser");
 SpeedElement.innerText = "Vitesse: *" + Math.round(Speed * 10) / 10;
-TimerElement.innerText = "Temps: 0h 0m 0s";
 
 canvas.addEventListener('click', handleClickEvent, false);
 window.addEventListener('resize', resizeCanvas, false);
 
-let drawInterval = setInterval(draw, 10); // Boucle principal
-let TimerInterval = setInterval(Timer, 1000);
+let drawInterval = setInterval(draw, 10); // Boucle principale
 let UpdateInformaions = setInterval(UpdateUsers, 100);
 UpdateUsers();
 
 /**
- * function qui permet de récuperer un aliment aléatoire de la liste
+ * fonction qui permet de récuperer un aliment aléatoire de la liste
  * @param {Array} list 
  * @returns 
  */
 function RandomFoodFromList(list) {
-  //On filtre les aliments de la categorie
+  // On filtre les aliments de la catégorie
   let foodCategorieList = list.filter(item => item.category === categorie);
-  if (foodCategorieList.length > 0 && Math.random() < 0.75) { // 75% de chance de tomber sur les aliments de la catégorie choisie 
+  if (foodCategorieList.length > 0 && Math.random() < 0.75) { 
+  // 75% de chance de tomber sur les aliments de la catégorie choisie 
     return foodCategorieList[Math.floor(Math.random() * foodCategorieList.length)];
   } else {
     return list[Math.floor(Math.random() * list.length)];
@@ -71,16 +66,17 @@ function createFood() {
     y: -FoodHeight,
     width: FoodWidth,
     height: FoodHeight,
-    src: "../sprites/" + randomFood.picture_path,
+    src: "../sprites/" + randomFood.picture_path, // chemin de l'image récuperer de randomFood
     speed: Speed,
-    name: randomFood.name,
-    category: randomFood.category,
+    name: randomFood.name, // le nom de l'aliment récuperer de random
+    category: randomFood.category, // la catégorie récuperer de randomFood
   };
   return food;
 }
 
+
 /**
- * function qui permet de dessiner les aliments
+ * fonction qui permet de dessiner les aliments
  */
 function draw() {
   // Effacer le canvas
@@ -93,29 +89,37 @@ function draw() {
     img.src = food.src;
     ctx.drawImage(img, food.x, food.y, food.width, food.height);
 
+    // Dessine le nom en dessus de l'aliment
+    ctx.font = "bold 13px Comic Sans MS";
+    ctx.fillText(food.name, food.x + food.width/3, food.y + food.height*1.2);
+
     // Fait tomber l'aliment avec la vitesse 
     food.y += food.speed;
 
-    // Si l'aliment atteint le bas de l'écran,on le supprime de la liste
+    // Si l'aliment atteint le bas de l'écran
     if (food.y > canvas.height - food.height) {
+      // On vérifie si l'aliment fais partie de la catégorie
       if (food.category == categorie) {
+        //Si oui on lui enleve les points
         Score -= 2;
+        //Si le socre est négatif on le met à zèro
         if (Score < 0) {
           Score = 0;
           GameOver();
         }
       }
-      sendDataToPhp(categorie, Score, Slice_count, time, 1);
+      // On envoie les donnés au php
+      sendDataToPhp(categorie, Score, Slice_count, 1);
+      // On supprime l'aliment
       foods.splice(i, 1);
       break;
     }
   }
-  //On vérifie si le nombre des aliments est plus petit que le nombre max des aliments
+  // On vérifie si le nombre des aliments est plus petit que le nombre max des aliments
   if (foods.length < nbFood) {
     foods.push(createFood());
   }
 }
-
 /**
  * function qui permet d'augmenter la vitesse du défilement du joueur qui a le score le plus petit
  */
@@ -123,7 +127,7 @@ function ShowUserInformations() {
   UpdateUsers();
   let userScore = JSON.parse(sessionStorage.getItem("ListUsers"));
   if (userScore.length > 1) {
-    //Si le jouer a le score le plus petit alors la vitesse augmente plus vite
+    // Si le jouer a le score le plus petit alors la vitesse augmente plus vite
     if (userScore[1]["idUser"] == idUser) {
       Speed += 0.1;
       SpeedElement.innerText = "Vitesse: *" + Math.round(Speed * 10) / 10;
@@ -132,7 +136,7 @@ function ShowUserInformations() {
 }
 
 /**
- * function qui permet de vérifier si le cursor est à l'interieur de l'image
+ * fonction qui permet de vérifier si le cursor est à l'interieur de l'image
  * @param {int} x position x du cursor
  * @param {int} y position y du cursor
  * @param {array} rect aliment
@@ -145,7 +149,7 @@ function isPointerInsideFood(x, y, rect) {
 
 
 /**
- * function qui permet de gérer l'évenement click
+ * fonction qui permet de gérer l'évenement click
  * @param {} event 
  */
 function handleClickEvent(event) {
@@ -158,17 +162,18 @@ function handleClickEvent(event) {
   for (let i = 0; i < foods.length; i++) {
     let food = foods[i];
     if (isPointerInsideFood(clicX, clicY, food)) {
-      // Supprimer l'aliment et on met à jour les informations
+      // Si l'aliment fait partie de la catégorie on augmente la vitesse,le score du joueur
       if (food.category == categorie) {
         Speed += 0.1;
         Score++;
-        nbFood = Math.floor(1 + (0.2 * (Speed - 2) / 0.1));
+        nbFood = Math.floor(1 + (0.2 * (Speed - 1) / 0.1));
         SpeedElement.innerText = "Vitesse: *" + Math.round(Speed * 10) / 10;
         Slice_count++;
         ShowUserInformations();
-        sendDataToPhp(categorie, Score, Slice_count, time, 1);
+        sendDataToPhp(categorie, Score, Slice_count, 1);
         
       } else {
+        // Si l'aliment fait partie de la catégorie malbouffe on arrête le jeu
         if (food.category == "malbouffe") {
           Score = 0;
           GameOver();
@@ -182,8 +187,8 @@ function handleClickEvent(event) {
         }
         
       }
-      sendDataToPhp(categorie, Score, Slice_count, time, 1);
-      //Supprimer l'aliment du tableau
+      sendDataToPhp(categorie, Score, Slice_count, 1);
+      // Supprimer l'aliment du tableau
       foods.splice(i, 1);
       break;
     }
@@ -191,40 +196,26 @@ function handleClickEvent(event) {
 }
 
 /**
- * function qui permet de rzise le canvas en fonction de la taille de la fênetre
+ * fonction qui permet de rezise le canvas en fonction de la taille de la fênetre
  */
 function resizeCanvas() {
   canvas.width = window.innerWidth * 0.8;
   canvas.height = window.innerHeight * 0.8;
 }
 
-
 /**
- * function qui permet d'affiche le timer 
- */
-function Timer() {
-  time++;
-  let hours = Math.floor(time / 3600);
-  let minutes = Math.floor((time - hours * 3600) / 60);
-  let seconds = time - hours * 3600 - minutes * 60;
-  TimerElement.innerText = "Temps: " + hours + "h " + minutes + "m " + seconds + "s";
-}
-
-/**
- * Évenement qui permet de vérifier si le joueur a quitté la page
+ * évenement qui permet de vérifier si le joueur a quitté la page
  */
 window.addEventListener('beforeunload', function (event) {
-  sendDataToPhp(categorie,Score, Slice_count, time, 0);
+  sendDataToPhp(categorie,Score, Slice_count, 0);
 });
 
-
 /**
- * function qui permet d'afficher le menu de la fin du jeu
+ * fonction qui permet d'afficher le menu de la fin du jeu
  */
 function GameOver() {
-  sendDataToPhp(categorie, Score, Slice_count, time, 0);
+  sendDataToPhp(categorie, Score, Slice_count, 0);
   clearInterval(UpdateInformaions);
-  clearInterval(TimerInterval);
   clearInterval(drawInterval);
   canvas.remove();
   GameOverMenu.style.visibility = "visible";

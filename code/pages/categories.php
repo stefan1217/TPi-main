@@ -1,4 +1,7 @@
 <?php
+/**
+ * Description: Page des catégories
+ */
 require_once('../model/functions/user.php');
 require_once('../model/functions/food.php');
 
@@ -18,7 +21,7 @@ if(!isset($_SESSION['nickname'])){
 <body class="game-background">
     <section class="container">
         <a href="../pages/account.php" class="link"><p class="title">Pseudo: <?=$_SESSION["nickname"]?></p></a>
-        <a href="../index.php" class="link"><button class="btn">Retour <<</button></a>
+        <a href="../index.php" class="link"><button class="account">Retour <<</button></a>
         <a href="game.php?category=fruit&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>&idUser=<?=$_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Fruit</button></a>
         <a href="game.php?category=légume&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>&idUser=<?=$_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Légume</button></a>
         <a href="game.php?category=légumineuse&startGame=true&parentUserId=<?= $_SESSION["idUtilisateur"]?>&idUser=<?=$_SESSION["idUtilisateur"]?>" class="link"><button class="btn">Légumineuse</button></a>

@@ -57,6 +57,32 @@
     transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
 }
 
+.btn-game-over{
+    width: 50%; 
+    height:10%;
+    background-color: #04AA6D; 
+    font-family: comic sans ms;
+    color: white; 
+    cursor: pointer; 
+    border-style: none;
+    font-size: 1.5vw;
+    transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
+}
+
+.btn-game-over:hover{
+    width: 35%; 
+    height:10%;
+    background-color: #04AA6D;
+    font-family: comic sans ms; 
+    color: white; 
+    cursor: pointer; 
+    border-style: none;
+    font-weight: bold;
+    font-size: large;
+    font-size: 1.5vw;
+    transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
+}
+
 .pseudo{
     font-size: 2vw;
     color:white;
@@ -65,14 +91,60 @@
 }
 
 .title{
-    font-size: 2vw;
+    font-size: 1.5vw;
     color:white;
     margin-left: 20%;
     width:50%;
     font-family: comic sans ms;
     text-align: center;
-    font-weight: bold;
     margin-left:23%;
+}
+
+.account{
+    font-size: 1.5vw;
+    color:white;
+    width:50%;
+    height:10%;
+    font-family: comic sans ms;
+    text-align: center;
+    font-weight: bold;
+    margin-left:20%;
+    margin-top:1%;
+    text-decoration: none;
+    background-color: #07b1a3;
+    border:none;
+    transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
+}
+
+.account:hover{
+    font-size: 1.5vw;
+    color:white;
+    width:40%;
+    height:10%;
+    font-family: comic sans ms;
+    text-align: center;
+    font-weight: bold;
+    margin-left:20%;
+    margin-top:1%;
+    text-decoration: none;
+    background-color: #07b1a3;
+    border:none;
+    font-weight: bold;
+    transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s, color 0.5s, font-size 0.5s;
+}
+
+
+.description{
+    font-size: 1vw;
+    color:white;
+    font-family: comic sans ms;
+    text-align: center;
+}
+
+.description-h2{
+    color:white;
+    font-family: comic sans ms;
+    text-align: center;
 }
 
 .games-text{
@@ -102,15 +174,20 @@
 
 .text{
     font-family: comic sans ms; 
+    color:white;
 }
 
 .message{
     color:red;
 }
 
+.img-rules{
+   margin-top:2%;
+   margin-left:25%;
+}
 #game-over-menu{
     visibility: hidden;
-    border:1px solid black;
+    border:5px solid black;
     width:40vw;
     height:40vh;
     margin-left:30%;
@@ -118,11 +195,10 @@
     text-align:center;
 }
 
-#canvas{
-    
+#canvas{   
     margin: auto;
     position: absolute;
-    border:1px solid black;
+    border:5px solid black;
 }
 
 #game-over-menu h1{
