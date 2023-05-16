@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: May 07, 2023 at 06:11 PM
--- Server version: 5.7.24
--- PHP Version: 7.2.19
+-- Hôte : 127.0.0.1:3306
+-- Généré le : mar. 16 mai 2023 à 13:47
+-- Version du serveur :  5.7.36
+-- Version de PHP : 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,40 +19,48 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_ninja`
+-- Base de données : `db_ninja`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `game`
+-- Structure de la table `game`
 --
 
-CREATE TABLE `game` (
-  `idGame` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `game`;
+CREATE TABLE IF NOT EXISTS `game` (
+  `idGame` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `date_start` datetime NOT NULL,
   `date_last_update` datetime NOT NULL,
   `score` int(11) NOT NULL,
   `slice_count` int(11) NOT NULL,
-  `duration` int(11) NOT NULL,
-  `idUser` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `duration` time NOT NULL,
+  `idUser` int(10) UNSIGNED NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `category` varchar(50) NOT NULL,
+  `parentIdUser` int(11) NOT NULL,
+  PRIMARY KEY (`idGame`),
+  KEY `idUser` (`idUser`)
+) ENGINE=InnoDB AUTO_INCREMENT=904 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `item`
+-- Structure de la table `item`
 --
 
-CREATE TABLE `item` (
-  `idItem` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `item`;
+CREATE TABLE IF NOT EXISTS `item` (
+  `idItem` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `picture_path` varchar(50) NOT NULL,
-  `category` enum('céréale','féculent','fruit','légume','légumineuse') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `category` enum('céréale','féculent','fruit','légume','légumineuse') NOT NULL,
+  PRIMARY KEY (`idItem`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `item`
+-- Déchargement des données de la table `item`
 --
 
 INSERT INTO `item` (`idItem`, `name`, `picture_path`, `category`) VALUES
@@ -70,67 +78,24 @@ INSERT INTO `item` (`idItem`, `name`, `picture_path`, `category`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Structure de la table `user`
 --
 
-CREATE TABLE `user` (
-  `idUser` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `idUser` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nickname` varchar(50) NOT NULL,
   `password` longtext NOT NULL,
-  `registration_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `registration_date` datetime NOT NULL,
+  PRIMARY KEY (`idUser`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `game`
---
-ALTER TABLE `game`
-  ADD PRIMARY KEY (`idGame`),
-  ADD KEY `idUser` (`idUser`);
-
---
--- Indexes for table `item`
---
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`idItem`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`idUser`);
-
---
--- AUTO_INCREMENT for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `game`
---
-ALTER TABLE `game`
-  MODIFY `idGame` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
-
---
--- AUTO_INCREMENT for table `item`
---
-ALTER TABLE `item`
-  MODIFY `idItem` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `idUser` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `game`
+-- Contraintes pour la table `game`
 --
 ALTER TABLE `game`
   ADD CONSTRAINT `game_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;

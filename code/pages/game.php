@@ -25,6 +25,7 @@ require_once('../controler/gameControler.php');
     <div id="result"></div>
     <div id="game-over-menu">
     <h1>Vous avez perdu!</h1>
+    <p id="duration"></p>
     <button id="game-over-menu-button" class="btn-game-over">Retour</button>
     </div> 
     <script src="../js/game.js" type="module"></script>

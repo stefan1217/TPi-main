@@ -16,7 +16,6 @@ let Slice_count = 0;
 let FoodList = JSON.parse(localStorage.getItem("Foods"));
 // Ajout des aliments malsains dans la liste
 addBadFood(FoodList);
-
 let SpeedElement = document.getElementById("speed");
 let GameOverMenu = document.getElementById("game-over-menu");
 let GameOverMenuButton = document.getElementById("game-over-menu-button");
@@ -102,7 +101,7 @@ function draw() {
       if (food.category == categorie) {
         //Si oui on lui enleve les points
         Score -= 2;
-        //Si le socre est négatif on le met à zèro
+        // Si le score est négatif on le met à zèro
         if (Score < 0) {
           Score = 0;
           GameOver();
@@ -127,9 +126,10 @@ function ShowUserInformations() {
   UpdateUsers();
   let userScore = JSON.parse(sessionStorage.getItem("ListUsers"));
   if (userScore.length > 1) {
+    
     // Si le jouer a le score le plus petit alors la vitesse augmente plus vite
-    if (userScore[1]["idUser"] == idUser) {
-      Speed += 0.1;
+    if (userScore[0]["idUser"] == idUser) {
+       Speed += 0.1;
       SpeedElement.innerText = "Vitesse: *" + Math.round(Speed * 10) / 10;
     }
   }
@@ -170,8 +170,7 @@ function handleClickEvent(event) {
         SpeedElement.innerText = "Vitesse: *" + Math.round(Speed * 10) / 10;
         Slice_count++;
         ShowUserInformations();
-        sendDataToPhp(categorie, Score, Slice_count, 1);
-        
+        sendDataToPhp(categorie, Score, Slice_count, 1);      
       } else {
         // Si l'aliment fait partie de la catégorie malbouffe on arrête le jeu
         if (food.category == "malbouffe") {
@@ -195,6 +194,8 @@ function handleClickEvent(event) {
   }
 }
 
+
+
 /**
  * fonction qui permet de rezise le canvas en fonction de la taille de la fênetre
  */
@@ -207,6 +208,7 @@ function resizeCanvas() {
  * évenement qui permet de vérifier si le joueur a quitté la page
  */
 window.addEventListener('beforeunload', function (event) {
+  
   sendDataToPhp(categorie,Score, Slice_count, 0);
 });
 
@@ -214,10 +216,17 @@ window.addEventListener('beforeunload', function (event) {
  * fonction qui permet d'afficher le menu de la fin du jeu
  */
 function GameOver() {
+  let userScore = JSON.parse(sessionStorage.getItem("ListUsers"));
+  // Supprime la variable de l'url
+  url.searchParams.delete("category");
+  history.replaceState(null, "", url);
   sendDataToPhp(categorie, Score, Slice_count, 0);
   clearInterval(UpdateInformaions);
   clearInterval(drawInterval);
   canvas.remove();
+  if (userScore.length < 2) {
+  document.getElementById("duration").innerText = document.getElementById("time").textContent;
+  }
   GameOverMenu.style.visibility = "visible";
   Informations.style.visibility = "hidden";
   GameOverMenuButton.addEventListener('click', function (event) {

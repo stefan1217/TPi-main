@@ -203,6 +203,11 @@
 
 #game-over-menu h1{
     margin-top:15%;
+    color : white;
+}
+
+#game-over-menu p{
+    color : white;
 }
 
 #result{

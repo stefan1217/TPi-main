@@ -153,7 +153,7 @@ else {
 }
 
 /**
- * fonction qui permet de récuperer toutes les infromations des joueurs présant dans une partie
+ * fonction qui permet de récuperer toutes les infromations des joueurs présant dans une partie et trient les jouers selon leurs scores
  * 
  * @param $parentIdUser
  * @return array
@@ -161,7 +161,7 @@ else {
 function GetAllUserInformations($parentIdUser){
     $sql = "SELECT game.score,game.idUser,game.slice_count,game.date_start,game.duration,user.nickname 
     from game INNER JOIN user ON game.idUser = user.idUser 
-    where game.parentIdUser = :parentIdUser and game.status = true order by game.score desc";
+    where game.parentIdUser = :parentIdUser and game.status = true order by game.score asc";
     $param = [
         'parentIdUser' => $parentIdUser,
     ];

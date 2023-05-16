@@ -6,6 +6,7 @@ require_once(__DIR__ . '/model/functions/user.php');
 
 if (!isset($_SESSION['nickname'])) {
     header("Location: pages/login.php");
+    die();
 }
 if (isset($_GET["logout"])) {
     logOut();

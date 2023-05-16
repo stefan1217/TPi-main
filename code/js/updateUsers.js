@@ -17,13 +17,30 @@ export function UpdateUsers() {
                 let nicknames = "";
                 let time = ""
                 json.users.forEach(element => {
-                    nicknames += "Joueur: " + element["nickname"] + " Score: " + element["score"]+ "\n";
-                    time =  "Temps : " + element["duration"];                  
-                });     
-                //On affiche les données des utilisateurs        
+                    nicknames += "Joueur: " + element["nickname"] + " Score: " + element["score"] + "\n";
+                    time = element["date_start"];
+                });
+                // On affiche les données des utilisateurs        
                 document.getElementById("nickaname").innerText = nicknames;
-                document.getElementById("time").innerText = time;
+                let now = new Date();
+                let date_start = new Date(time);
+
+                // Calculer la différence en millisecondes entre les deux dates
+                let difference = now.getTime() - date_start.getTime();
+
+                // Convertir la différence en millisecondes en secondes, minutes, heures et jours
+                let seconds = Math.floor(difference / 1000);
+                let minutes = Math.floor(seconds / 60);
+                let hours = Math.floor(minutes / 60);
+
+                // Calculer le temps restant dans chaque unité
+                let remaningSeconds = seconds % 60;
+                let remaningMinutes = minutes % 60;
+                let remaningHours = hours % 24;
+
+                // On affiche le temps restant
+                document.getElementById("time").innerText = "Temps : " + remaningHours + ":" + +remaningMinutes + ":" + remaningSeconds;
                 sessionStorage.setItem('ListUsers', JSON.stringify(json.users));
-            });        
+            });
     }
 }
