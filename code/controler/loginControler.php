@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description : Page qui contient tout le code php de la page login
  */
@@ -8,12 +9,12 @@ $nickname = filter_input(INPUT_POST, "nickname", FILTER_UNSAFE_RAW);
 $password = filter_input(INPUT_POST, "password", FILTER_UNSAFE_RAW);
 $btn = filter_input(INPUT_POST, "btn");
 $message = "";
-
+// Vérifie si l'utilisateur est connecté
 if (isset($_SESSION["nickname"])) {
     header("Location: ../index.php");
     die();
 }
-if(isset($_GET["message"])){
+if (isset($_GET["message"])) {
     $message = $_GET["message"];
 }
 if ($btn != null) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Description: Page de connexion
+ * Description: Page de la connexion
  */
 require_once('../model/functions/user.php');
 require_once('../controler/loginControler.php');

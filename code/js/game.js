@@ -3,79 +3,81 @@
  */
 import { sendDataToPhp } from "./sendDataToPhp.js";
 import { addBadFood } from "./addBadFood.js";
-import { UpdateUsers } from "./updateUsers.js";
+import { updateUsers } from "./updateUsers.js";
 
-// Déclarations des varaiables
+// Déclarations des variables
 let nbFood = 1;
-let Speed = 1;
-let Score = 0;
+let speed = 1;
+let score = 0;
 let foods = [];
-let Slice_count = 0;
-
-// Récuperation des aliments
-let FoodList = JSON.parse(localStorage.getItem("Foods"));
+let slice_count = 0;
+let isMultiplayer = false;
+// Récuperation d'aliments
+let foodList = JSON.parse(localStorage.getItem("Foods"));
 // Ajout des aliments malsains dans la liste
-addBadFood(FoodList);
-let SpeedElement = document.getElementById("speed");
-let GameOverMenu = document.getElementById("game-over-menu");
-let GameOverMenuButton = document.getElementById("game-over-menu-button");
-let Informations = document.getElementById("informations");
+addBadFood(foodList);
+// Récupération des éléments HTML
+let speedElement = document.getElementById("speed");
+let gameOverMenu = document.getElementById("game-over-menu");
+let gameOverMenuButton = document.getElementById("game-over-menu-button");
+let informations = document.getElementById("informations");
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
-
+// Définition de la taille du canvas
 canvas.width = window.innerWidth * 0.95;
 canvas.height = window.innerHeight * 0.75;
 let FoodWidth = canvas.width / 25;
 let FoodHeight = canvas.width / 20;
 let url = new URL(window.location.href);
-let categorie = url.searchParams.get("category");
+// Récupérations des variables de l'URL
+let URLcategory = url.searchParams.get("category");
 let idUser = url.searchParams.get("idUser");
-SpeedElement.innerText = "Vitesse: *" + Math.round(Speed * 10) / 10;
+speedElement.innerText = "Vitesse: *" + Math.round(speed * 10) / 10;
 
 canvas.addEventListener('click', handleClickEvent, false);
 window.addEventListener('resize', resizeCanvas, false);
 
 let drawInterval = setInterval(draw, 10); // Boucle principale
-let UpdateInformaions = setInterval(UpdateUsers, 100);
-UpdateUsers();
+let UpdateInformaions = setInterval(updateUsers, 100);
+updateUsers();
 
 /**
  * fonction qui permet de récuperer un aliment aléatoire de la liste
- * @param {Array} list 
+ * @param {Array} list  la liste des aliments
  * @returns 
  */
-function RandomFoodFromList(list) {
+function randomFoodFromList(list) {
   // On filtre les aliments de la catégorie
-  let foodCategorieList = list.filter(item => item.category === categorie);
-  if (foodCategorieList.length > 0 && Math.random() < 0.75) { 
-  // 75% de chance de tomber sur les aliments de la catégorie choisie 
+  let foodCategorieList = list.filter(item => item.category === URLcategory);
+  if (foodCategorieList.length > 0 && Math.random() < 0.75) {
+    // 75% de chance de tomber sur les aliments de la catégorie choisie 
     return foodCategorieList[Math.floor(Math.random() * foodCategorieList.length)];
   } else {
     return list[Math.floor(Math.random() * list.length)];
   }
 }
 /** 
- * function qui permet de crée un nouveau aliment
+ * fonction qui permet de crée un nouveau aliment
  * @returns food
  */
 function createFood() {
-  let randomFood = RandomFoodFromList(FoodList);
+  let randomFood = randomFoodFromList(foodList);
   let food = {
     x: Math.random() * Math.floor(Math.random() * (canvas.width - (FoodHeight) - FoodWidth)) + FoodWidth, // position x aléatoire
     y: -FoodHeight,
     width: FoodWidth,
     height: FoodHeight,
-    src: "../sprites/" + randomFood.picture_path, // chemin de l'image récuperer de randomFood
-    speed: Speed,
-    name: randomFood.name, // le nom de l'aliment récuperer de random
-    category: randomFood.category, // la catégorie récuperer de randomFood
+    src: "../sprites/" + randomFood.picture_path, // chemin de l'image récuperer de la fonction randomFood()
+    speed: speed,
+    name: randomFood.name, // le nom de l'aliment récuperer de random de la fonction randomFood()
+    category: randomFood.category, // la catégorie récuperer de randomFood de la fonction randomFood()
   };
   return food;
 }
 
 
 /**
- * fonction qui permet de dessiner les aliments
+ * fonction qui permet de dessiner les aliments sur le canvas
  */
 function draw() {
   // Effacer le canvas
@@ -86,11 +88,12 @@ function draw() {
     let food = foods[i];
     let img = new Image();
     img.src = food.src;
+    // Ajout de l'aliment sur le canvas
     ctx.drawImage(img, food.x, food.y, food.width, food.height);
 
     // Dessine le nom en dessus de l'aliment
     ctx.font = "bold 13px Comic Sans MS";
-    ctx.fillText(food.name, food.x + food.width/3, food.y + food.height*1.2);
+    ctx.fillText(food.name, food.x + food.width / 3, food.y + food.height * 1.2);
 
     // Fait tomber l'aliment avec la vitesse 
     food.y += food.speed;
@@ -98,39 +101,39 @@ function draw() {
     // Si l'aliment atteint le bas de l'écran
     if (food.y > canvas.height - food.height) {
       // On vérifie si l'aliment fais partie de la catégorie
-      if (food.category == categorie) {
-        //Si oui on lui enleve les points
-        Score -= 2;
+      if (food.category == URLcategory) {
+        // Si oui on lui enlève les points
+        score -= 2;
         // Si le score est négatif on le met à zèro
-        if (Score < 0) {
-          Score = 0;
-          GameOver();
+        if (score < 0) {
+          score = 0;
+          gameOver();
         }
       }
       // On envoie les donnés au php
-      sendDataToPhp(categorie, Score, Slice_count, 1);
+      sendDataToPhp(URLcategory, score, slice_count, 1);
       // On supprime l'aliment
       foods.splice(i, 1);
       break;
     }
   }
-  // On vérifie si le nombre des aliments est plus petit que le nombre max des aliments
+  // On vérifie si le nombre d'aliments est plus petit que le nombre max des aliments
   if (foods.length < nbFood) {
     foods.push(createFood());
   }
 }
 /**
- * function qui permet d'augmenter la vitesse du défilement du joueur qui a le score le plus petit
+ * fonction qui permet d'augmenter la vitesse du défilement du joueur qui a le score le plus petit de la partie
  */
-function ShowUserInformations() {
-  UpdateUsers();
+function addAndShowUsersSpeed() {
+  updateUsers();
   let userScore = JSON.parse(sessionStorage.getItem("ListUsers"));
   if (userScore.length > 1) {
-    
+    isMultiplayer = true;
     // Si le jouer a le score le plus petit alors la vitesse augmente plus vite
     if (userScore[0]["idUser"] == idUser) {
-       Speed += 0.1;
-      SpeedElement.innerText = "Vitesse: *" + Math.round(Speed * 10) / 10;
+      speed += 0.1;
+      speedElement.innerText = "Vitesse: *" + Math.round(speed * 10) / 10;
     }
   }
 }
@@ -139,7 +142,7 @@ function ShowUserInformations() {
  * fonction qui permet de vérifier si le cursor est à l'interieur de l'image
  * @param {int} x position x du cursor
  * @param {int} y position y du cursor
- * @param {array} rect aliment
+ * @param {array} rect l'aliment
  * @returns 
  */
 function isPointerInsideFood(x, y, rect) {
@@ -149,7 +152,7 @@ function isPointerInsideFood(x, y, rect) {
 
 
 /**
- * fonction qui permet de gérer l'évenement click
+ * fonction qui permet de gérer de vérifier si un aliment a été clicker
  * @param {} event 
  */
 function handleClickEvent(event) {
@@ -163,30 +166,29 @@ function handleClickEvent(event) {
     let food = foods[i];
     if (isPointerInsideFood(clicX, clicY, food)) {
       // Si l'aliment fait partie de la catégorie on augmente la vitesse,le score du joueur
-      if (food.category == categorie) {
-        Speed += 0.1;
-        Score++;
-        nbFood = Math.floor(1 + (0.2 * (Speed - 1) / 0.1));
-        SpeedElement.innerText = "Vitesse: *" + Math.round(Speed * 10) / 10;
-        Slice_count++;
-        ShowUserInformations();
-        sendDataToPhp(categorie, Score, Slice_count, 1);      
+      if (food.category == URLcategory) {
+        speed += 0.1;
+        score++;
+        nbFood = Math.floor(1 + (0.2 * (speed - 1) / 0.1));
+        speedElement.innerText = "Vitesse: *" + Math.round(speed * 10) / 10;
+        slice_count++;
+        addAndShowUsersSpeed();
+        sendDataToPhp(URLcategory, score, slice_count, 1);
       } else {
         // Si l'aliment fait partie de la catégorie malbouffe on arrête le jeu
         if (food.category == "malbouffe") {
-          Score = 0;
-          GameOver();
+          score = 0;
+          gameOver();
         }
-        Score -= 2;
-        Slice_count++;
-        ShowUserInformations();
-        if (Score < 0) {
-          Score = 0;
-          GameOver();
+        score -= 2;
+        slice_count++;
+        addAndShowUsersSpeed();
+        if (score < 0) {
+          score = 0;
+          gameOver();
         }
-        
       }
-      sendDataToPhp(categorie, Score, Slice_count, 1);
+      sendDataToPhp(URLcategory, score, slice_count, 1);
       // Supprimer l'aliment du tableau
       foods.splice(i, 1);
       break;
@@ -194,43 +196,48 @@ function handleClickEvent(event) {
   }
 }
 
-
-
 /**
  * fonction qui permet de rezise le canvas en fonction de la taille de la fênetre
  */
 function resizeCanvas() {
-  canvas.width = window.innerWidth * 0.8;
-  canvas.height = window.innerHeight * 0.8;
+  canvas.width = window.innerWidth * 0.9;
+  canvas.height = window.innerHeight * 0.9;
 }
 
 /**
- * évenement qui permet de vérifier si le joueur a quitté la page
+ * événement qui permet de vérifier si le joueur a quitté ou rechargé la page
  */
 window.addEventListener('beforeunload', function (event) {
-  
-  sendDataToPhp(categorie,Score, Slice_count, 0);
+
+  sendDataToPhp(URLcategory, score, slice_count, 0);
 });
 
 /**
  * fonction qui permet d'afficher le menu de la fin du jeu
  */
-function GameOver() {
+function gameOver() {
   let userScore = JSON.parse(sessionStorage.getItem("ListUsers"));
   // Supprime la variable de l'url
   url.searchParams.delete("category");
   history.replaceState(null, "", url);
-  sendDataToPhp(categorie, Score, Slice_count, 0);
+  sendDataToPhp(URLcategory, score, slice_count, 0);
   clearInterval(UpdateInformaions);
   clearInterval(drawInterval);
   canvas.remove();
+  // On vérifie si le nombres de joueurs de la partie
   if (userScore.length < 2) {
-  document.getElementById("duration").innerText = document.getElementById("time").textContent;
+    // On vérifie si le jeu est en multijouer
+    if (isMultiplayer) {
+      // Affichage du gagnant de la partie
+      document.getElementById("winner").innerText = "Vous avez gagné la partie!";
+    }
   }
-  GameOverMenu.style.visibility = "visible";
-  Informations.style.visibility = "hidden";
-  GameOverMenuButton.addEventListener('click', function (event) {
-  location.href = "./categories.php";
+  // Affichage de la durée de la partie
+  document.getElementById("duration").innerText = document.getElementById("time").textContent;
+  gameOverMenu.style.visibility = "visible";
+  informations.style.visibility = "hidden";
+  gameOverMenuButton.addEventListener('click', function (event) {
+    location.href = "./categories.php";
   });
 }
 

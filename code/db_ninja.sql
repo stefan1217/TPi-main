@@ -24,6 +24,9 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+CREATE DATABASE IF NOT EXISTS `db_ninja` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `db_ninja`;
+
 --
 -- Structure de la table `game`
 --
@@ -104,3 +107,7 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- Création de l'utilisateur
+CREATE USER IF NOT EXISTS 'slim_ninja_user'@'localhost' IDENTIFIED BY PASSWORD "*F3C8C27716DFA16408085940A941FE9E2CD62F28";
+GRANT ALL PRIVILEGES ON db_ninja.* TO 'slim_ninja_user'@'%';

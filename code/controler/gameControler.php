@@ -5,7 +5,7 @@
  */
 $date = date('Y-m-d H:i:s');
 
-// On vérifie si l'utilisateur est connecté
+// Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['nickname'])) {
     header("Location: ./login.php");
     die();

@@ -3,7 +3,7 @@
  * Description: Page principale
  */
 require_once(__DIR__ . '/model/functions/user.php');
-
+// Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['nickname'])) {
     header("Location: pages/login.php");
     die();

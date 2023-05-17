@@ -4,10 +4,11 @@
  */
 require_once('../model/functions/user.php');
 require_once('../model/functions/food.php');
-
+// Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['nickname'])) {
     header("Location: ./login.php");
 }
+//Récupération des parties
 $games = GetOnGoingGames($_SESSION["idUtilisateur"]);
 ?>
 <!DOCTYPE html>
@@ -18,7 +19,7 @@ $games = GetOnGoingGames($_SESSION["idUtilisateur"]);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/main.css">
-    <title>Home</title>
+    <title>Games</title>
 </head>
 <body class="game-background">
     <section class="container">
@@ -26,7 +27,7 @@ $games = GetOnGoingGames($_SESSION["idUtilisateur"]);
             <p class="title">Pseudo: <?= $_SESSION["nickname"] ?></p>
         </a>
         <a href="../index.php" class="link"><button class="account">Retour <<< </button></a>
-
+        <!--Affichage des parties-->
         <?php foreach ($games as $game) {
         ?>
             <p class="games-text">Hôte: <?php echo $game["nickname"]; ?></p>

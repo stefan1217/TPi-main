@@ -13,7 +13,7 @@ require_once('../controler/gameControler.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/main.css">
-    <title>Jeu</title>
+    <title>Game</title>
 </head>
 <body class="game-background">
     <div id="informations"> 
@@ -26,6 +26,7 @@ require_once('../controler/gameControler.php');
     <div id="game-over-menu">
     <h1>Vous avez perdu!</h1>
     <p id="duration"></p>
+    <p id="winner"></p>
     <button id="game-over-menu-button" class="btn-game-over">Retour</button>
     </div> 
     <script src="../js/game.js" type="module"></script>

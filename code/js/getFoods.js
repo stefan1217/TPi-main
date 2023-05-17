@@ -9,7 +9,7 @@ function GetAllFood() {
     fetch("./api/getFoods.php", config)
         .then(response => { return response.json() })
         .then(json => {
-
+            // On stocke la liste des aliments dans une variable localstorage
             localStorage.setItem("Foods", JSON.stringify(json.foods));
         });
 }

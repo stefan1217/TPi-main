@@ -1,14 +1,15 @@
 <?php
+
 /**
  * Description : Page qui contient tout le code php de la page isncriptions
  */
 
 // On filtre les champs nickname et password
-$nickname = filter_input(INPUT_POST, "nickname",FILTER_UNSAFE_RAW);
-$password = filter_input(INPUT_POST, "password",FILTER_UNSAFE_RAW);
+$nickname = filter_input(INPUT_POST, "nickname", FILTER_UNSAFE_RAW);
+$password = filter_input(INPUT_POST, "password", FILTER_UNSAFE_RAW);
 $btn = filter_input(INPUT_POST, "btn");
 $message = "";
-
+// Vérifie si l'utilisateur est connecté
 if (isset($_SESSION["nickname"])) {
     header("Location: ../index.php");
     die();

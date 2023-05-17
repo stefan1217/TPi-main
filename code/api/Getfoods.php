@@ -7,9 +7,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;   
 }
 /**
- * fonction qui encode en json tous les aliments 
+ * fonction qui récupère tous les aliments et les  encode en JSON 
  *
- * @return json
+ * @return json // liste d'aliments en format JSON
  */
 function methodGET()
 {

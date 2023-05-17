@@ -4,7 +4,7 @@
  */
 require_once('../model/functions/user.php');
 require_once('../model/functions/food.php');
-
+// Vérifie si l'utilisateur est connecté
 if(!isset($_SESSION['nickname'])){
     header("Location: ./login.php");
 }
@@ -16,7 +16,7 @@ if(!isset($_SESSION['nickname'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/main.css">
-    <title>Home</title>
+    <title>Categories</title>
 </head>
 <body class="game-background">
     <section class="container">

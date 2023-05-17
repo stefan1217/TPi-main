@@ -24,7 +24,7 @@ require_once('../controler/inscriptionsControler.php');
         <p>Mot de passe:</p>
         <input type="password" minlength="3" name="password" placeholder="mot de passe" required>
         <input type="submit" value="valider" name="btn">
-        <a href="./login.php"></p>J'ai deja un compte</p></a>
+        <a href="./login.php"></p>J'ai déjà un compte</p></a>
         <p class="message"><?= $message; ?></p>
     </form>
 </body>
